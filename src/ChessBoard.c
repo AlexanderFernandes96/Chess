@@ -53,3 +53,31 @@ void printChessBoard(char** board) {
     printf("  +-------------------------------+\n");
     printf("    a   b   c   d   e   f   g   h  \n");
 }   
+
+
+int movePiece(char** board, const char* loc) {
+
+    if (loc[0] == 'Q' || loc[0] == 'q') {
+        return 1; // Quit
+    }
+
+    int colFrom, rowFrom, colTo, rowTo, status = 0;
+    colFrom = loc[0] - 'a';
+    rowFrom = 8 - (loc[1] - '0');
+    colTo = loc[2] - 'a';
+    rowTo = 8 - (loc[3] - '0');
+
+    if (rowFrom < 0 || rowFrom > 7 || colFrom < 0 || colFrom > 7 ||
+       rowTo < 0 || rowTo > 7 || colTo < 0 || colTo > 7) {
+        return -1; // Error
+    }
+
+    if (!(rowFrom == rowTo && colFrom == colTo)) {
+        if (board[rowFrom][colFrom] != ' ') {
+            board[rowTo][colTo] = board[rowFrom][colFrom];
+            board[rowFrom][colFrom] = ' ';
+        } else { return -1; } // Error: No piece at 'From' location
+    } 
+
+    return status; // Move successful
+}

@@ -11,6 +11,7 @@ char** createChessBoard();
 void freeChessBoard(char** board);
 void resetChessBoard(char** board);
 void printChessBoard(char** board);
+int movePiece(char** board, const char* loc);
 
 #endif // CHESS_BOARD_H
 
