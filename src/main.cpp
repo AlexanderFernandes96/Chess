@@ -1,8 +1,14 @@
 #include <iostream>
+#include "ChessBoard.h"
 
 int main()
 {
-    std::cout << "Hello World" << std::endl;
-    std::cin.get(); // Wait for user input before closing the console window
+    // Initialize variables
+    char** board = createChessBoard();
+    resetChessBoard(board);
+    printChessBoard(board);
+
+    // End of the program, free the allocated memory
+    freeChessBoard(board);
     return 0;
 }
