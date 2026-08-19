@@ -44,6 +44,7 @@ enum {
 
 void resetChessBoard(ChessBoard *board);
 void printChessBoard(const ChessBoard *board);
+uint8_t movePieceChessNotation(ChessBoard *board, const char *notation);
 uint8_t movePiece(ChessBoard *board, uint8_t rf, uint8_t cf, uint8_t rt, uint8_t ct);
 uint8_t checkMove(const ChessBoard *board, uint8_t rf, uint8_t cf, uint8_t rt, uint8_t ct);
 

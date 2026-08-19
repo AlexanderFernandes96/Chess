@@ -79,6 +79,25 @@ void printChessBoard(const ChessBoard *chessboard) {
     }
 }   
 
+uint8_t movePieceChessNotation(ChessBoard *board, const char *chessMove)
+{
+    if (board == NULL || chessMove == NULL) 
+        return MOVE_INVALID;
+    if (chessMove[0] == 'Q' || chessMove[0] == 'q') 
+        return MOVE_QUIT;
+    if (strlen(chessMove) != 4)
+       return MOVE_INVALID;
+    if (chessMove[0] < 'a' || chessMove[0] > 'h' || chessMove[1] < '1' || chessMove[1] > '8' || 
+        chessMove[2] < 'a' || chessMove[2] > 'h' || chessMove[3] < '1' || chessMove[3] > '8') 
+        return MOVE_INVALID;
+
+    uint8_t fromFile = (uint8_t)(chessMove[0] - 'a');
+    uint8_t fromRank = (uint8_t)(8 - (chessMove[1] - '0'));
+    uint8_t toFile = (uint8_t)(chessMove[2] - 'a');
+    uint8_t toRank = (uint8_t)(8 - (chessMove[3] - '0'));
+
+    return movePiece(board, fromRank, fromFile, toRank, toFile);
+}
 
 uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, uint8_t ct) {
     if (chessboard == NULL) return MOVE_INVALID; 
