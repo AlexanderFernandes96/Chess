@@ -24,8 +24,10 @@ void resetChessBoard(ChessBoard *chessboard) {
         'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
         'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'
     };
-
     memcpy(chessboard->board, bd, sizeof(bd));
+
+    chessboard->whiteKingSquare = E1;
+    chessboard->blackKingSquare = E8;
 }
 
 void printChessBoard(const ChessBoard *chessboard) {
@@ -122,9 +124,11 @@ uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, ui
                     }
                 break;
             case 'k':
+                chessboard->whiteKingSquare = GRID(rt,ct);
                 chessboard->castlingRights &= ~(CASTLE_WHITE_KINGSIDE | CASTLE_WHITE_QUEENSIDE);
                 break;
             case 'K':
+                chessboard->blackKingSquare = GRID(rt,ct);
                 chessboard->castlingRights &= ~(CASTLE_BLACK_KINGSIDE | CASTLE_BLACK_QUEENSIDE);
                 break;
             case 'r':
@@ -146,6 +150,7 @@ uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, ui
         chessboard->board[61] = 'r'; // 7 * 8 + 5
         chessboard->board[60] = ' '; // 7 * 8 + 4
         chessboard->board[63] = ' '; // 7 * 8 + 7
+        chessboard->whiteKingSquare = GRID(rt,ct);
         chessboard->castlingRights &= ~CASTLE_WHITE_KINGSIDE; // Remove castling right
         status = MOVE_SUCCESS;
     } else if (status == CASTLE_WHITE_QUEENSIDE) { // white queenside castling
@@ -153,6 +158,7 @@ uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, ui
         chessboard->board[59] = 'r'; // 7 * 8 + 3
         chessboard->board[60] = ' '; // 7 * 8 + 4
         chessboard->board[56] = ' '; // 7 * 8 + 0
+        chessboard->whiteKingSquare = GRID(rt,ct);
         chessboard->castlingRights &= ~CASTLE_WHITE_QUEENSIDE;
         status = MOVE_SUCCESS;
     } else if (status == CASTLE_BLACK_KINGSIDE) { // black kingside castling
@@ -160,6 +166,7 @@ uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, ui
         chessboard->board[5] = 'R'; // 0 * 8 + 5
         chessboard->board[4] = ' '; // 0 * 8 + 4
         chessboard->board[7] = ' '; // 0 * 8 + 7
+        chessboard->blackKingSquare = GRID(rt,ct);
         chessboard->castlingRights &= ~CASTLE_BLACK_KINGSIDE;
         status = MOVE_SUCCESS;
     } else if (status == CASTLE_BLACK_QUEENSIDE) { // black queenside castling
@@ -167,6 +174,7 @@ uint8_t movePiece(ChessBoard *chessboard, uint8_t rf, uint8_t cf, uint8_t rt, ui
         chessboard->board[3] = 'R'; // 0 * 8 + 3
         chessboard->board[4] = ' '; // 0 * 8 + 4
         chessboard->board[0] = ' '; // 0 * 8 + 0
+        chessboard->blackKingSquare = GRID(rt,ct);
         chessboard->castlingRights &= ~CASTLE_BLACK_QUEENSIDE;
         status = MOVE_SUCCESS;
     } else if (status == EN_PASSANT) {

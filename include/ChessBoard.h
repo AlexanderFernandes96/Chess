@@ -18,6 +18,8 @@ typedef struct {
     bool playerTurn; // White = true, Black = false
     uint8_t castlingRights; // 4 bits for castling rights
     uint8_t enPassantSquare; // 0-63 index for en passant target square to move to 
+    uint8_t whiteKingSquare;
+    uint8_t blackKingSquare;
 } ChessBoard;
 
 enum {
